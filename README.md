@@ -4,7 +4,7 @@
 
 Cleans up route 53 entries left behind by kops.
 
-### USAGE:
+#### USAGE:
 
 ```
 $ kops-r53-clean.py
@@ -35,7 +35,7 @@ Cleans up the IAM instance_profiles, roles and policies left behind by kops
 
 NOTE: This script has less 'mercy' than the python version
 
-### USAGE:
+#### USAGE:
 
 ```
 $ kops-iam-clean.sh
