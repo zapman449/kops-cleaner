@@ -19,7 +19,7 @@ def usage():
 USAGE:
 {0} <KOPS_NAME>
 
-Will find and delete all route53 names under KOPS_NAME""")
+Will find and delete all route53 names under KOPS_NAME""".format(sys.argv[0]))
 
 
 def derive_potential_zones(name):
@@ -84,7 +84,9 @@ def delete_entries(entries, zone):
     for entry in entries:
         statuses.append(zone.delete_a(entry.name))
     print("Submitted deletes. Waiting on Status updates.")
+    outercounter = 0
     while True:
+        outercounter += 1
         counter = 0
         for status in statuses:
             if status.status == 'INSYNC':
@@ -96,9 +98,12 @@ def delete_entries(entries, zone):
         if counter == len(statuses):
             break
         print(".", end="")
+        if outercounter >= 30:
+            print("Giving up on waiting for AWS")
         # print("{}".format(counter), end="")
         sys.stdout.flush()
         time.sleep(2)
+    print("complete")
 
 
 def main():
